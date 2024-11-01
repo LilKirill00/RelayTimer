@@ -1,6 +1,7 @@
 // Настройки которые можно менять
 
 #define RELAY_PIN 2    // пин для реле на который подавать ток чтобы вкл или выключить
+#define RELAY_TYPE LOW  // какая должна быть сила сигнала для вкл реле (LOW или HIGH)
 
 // Конец настроек
 
@@ -215,12 +216,20 @@ void clockTick() {
 void relayOn() {
   Serial.println(F("Включение реле..."));
   state = true;
-  digitalWrite(RELAY_PIN, LOW);
+  if (RELAY_TYPE == LOW) {
+    digitalWrite(RELAY_PIN, LOW);
+  } else {
+    digitalWrite(RELAY_PIN, HIGH);
+  }
 }
 
 // Выключить реле
 void relayOff() {
   Serial.println(F("Выключение реле..."));
   state = false;
-  digitalWrite(RELAY_PIN, HIGH);
+  if (RELAY_TYPE == LOW) {
+    digitalWrite(RELAY_PIN, HIGH);
+  } else {
+    digitalWrite(RELAY_PIN, LOW);
+  }
 }
